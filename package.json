@@ -1,0 +1,28 @@
+{
+  "name": "lachy",
+  "version": "1.0.0",
+  "description": "lachy a simple music bot for discord.",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iStorry/lachy.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord",
+    "bot"
+  ],
+  "author": "Jatinjit Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iStorry/lachy/issues"
+  },
+  "homepage": "https://github.com/iStorry/lachy#readme"
+}
