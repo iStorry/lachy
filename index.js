@@ -47,42 +47,42 @@ client.on('message', (message) => {
                     else { return core.isReply(message, client, "Please Enter A Playlist Name"); }
                 break
                 case "play":
+                var stream, dispatcher;
                     core.isValidChannel(message, function(result){
                         result.join().then(connection => {
                             core.isPlaylistPlay(message, client, function(result) {
-                                const stream = ytdl(result, { filter : 'audioonly' });
-                                const dispatcher = connection.playStream(stream, options);
-                                dispatcher.on("end", end => {
-                                });
+                                for (let index = 0; index < result.length; index++) {
+                                    console.log("Playing : " + result[index].song_name);
+                                    const stream = ytdl(result[index].song_url, { filter : 'audioonly' });
+                                    const dispatcher = connection.playStream(stream, options);
+                                    dispatcher.on("end", end => {
+                                        console.log("Ended : " + result[index].song_name);
+                                    });
+                                }
                             })
-                            //result.leave();
                         }).catch(err => console.log(err));
                     });
                 break
                 default: core.isHelp(message, client); break
             }
+            case "play":
+                message.delete();
+                core.isValidOwnerRLI(message);
+                if (args[1]) { 
+                    core.isValidChannel(message, function(result){
+                        result.join().then(connection => {
+                            var stream = ytdl(uri[1], { filter : 'audioonly' });
+                            var dispatcher = connection.playStream(stream, options);
+                            dispatcher.on("end", end => {
+                                console.log("Song Ended");
+                            });
+                        });
+                    });
+                }
+                else { return core.isReply(message, client, "Youtube URL Required."); }
+            break
+            case "ping": message.reply("`" + client.ping + "!ms`"); break;
         break
-        // case "play":
-        //     // message.delete();
-        //     // config.isValidChannel(message, function(result){
-        //     //     result.join().then(connection => {
-        //     //         config.isMessageEmbed(message, "Joined Voice Channel", uri[1], client);
-        //     //         const stream = ytdl(uri[1], { filter : 'audioonly' });
-        //     //         const dispatcher = connection.playStream(stream, streamOptions);
-        //     //         dispatcher.on("end", end => {
-        //     //             console.log("left channel");
-        //     //             result.leave();
-        //     //         });
-        //     //     }).catch(err => console.log(err));
-        //     // });
-            
-        //     // songs.isValidURL(yt, uri[1], function(result) {
-        //     //     message.channel.send("You're About To Play : `" + result["title"] + "`");
-        //     // });
-        // break
-        // case "leave":
-        //     config.isValidOwner(message);
-        // break
     }
 
 });

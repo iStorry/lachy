@@ -26,6 +26,12 @@ module.exports = {
             return;
         }
     },
+    isValidOwnerRLI: function(message) {
+        if (!message.member.roles.find("name", "RLI Bot Commander")) {
+            message.channel.send('You need the \`RLI Bot Commander\` role to use this command.');
+            return;
+        }
+    },
     isValidChannel: function(message, response) {
         var voice = message.member.voiceChannel;
         if (voice !== undefined) {
@@ -110,10 +116,7 @@ module.exports = {
             var json = { owner_id: message.author.id };
             database.isQuery(json, key.songs_collection, function(result){
                 if (result.length == 0) return reply.isInstantReply(message, client, "No songs found in playlist.");
-                for (i = 0; i < result.length; i++) {
-                    text += result[i].song_url + "\n";
-                }
-                response(text)
+                response(result)
             });
         });
     },
